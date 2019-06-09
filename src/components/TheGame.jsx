@@ -11,7 +11,7 @@ class TheGame extends Component {
       keyPressed: "down",
       foodI: 4,
       foodJ: 4,
-      points:0
+      points: 0
     }
   }
   componentDidMount() {
@@ -28,7 +28,7 @@ class TheGame extends Component {
     direction[this.state.endI][this.state.endJ] = "down"
     gameArray[this.state.endI][this.state.endJ] = 1
     this.setState({ ...this.state, gameArray: gameArray, direction: direction })
-    setInterval(this.onEverySecond, 200)
+    setInterval(this.onEverySecond, 100)
   }
   onEverySecond = () => {
     if (!this.state.dead) {
@@ -42,21 +42,21 @@ class TheGame extends Component {
         this.setState({
           ...this.state,
           startJ: this.state.startJ == 0 ? 19 : this.state.startJ - 1,
-          lastPressed : "left"
+          lastPressed: "left"
         })
       } else if (this.state.keyPressed == "right") {
         this.setState({
           ...this.state,
           startJ: this.state.startJ == 19 ? 0 : this.state.startJ + 1,
-          lastPressed : "right"
+          lastPressed: "right"
         })
       } else if (this.state.keyPressed == "down") {
         this.setState({
           ...this.state,
           startI: this.state.startI == 19 ? 0 : this.state.startI + 1,
-          lastPressed : "down"
+          lastPressed: "down"
         })
-      } else if (this.state.keyPressed == "up" ) {
+      } else if (this.state.keyPressed == "up") {
         this.setState({
           ...this.state,
           startI: this.state.startI == 0 ? 19 : this.state.startI - 1,
@@ -70,14 +70,14 @@ class TheGame extends Component {
 
         this.state.gameArray[this.state.startI][this.state.startJ] = 0
         let newGameArray1 = this.state.gameArray
-        let i = Math.floor(Math.random()*20);
-        let j = Math.floor(Math.random()*20);
-        while(newGameArray1[i][j] === 1){
-        i = Math.floor(Math.random()*20);
-        j = Math.floor(Math.random()*20);
-        
-}       newGameArray1[i][j] = 2
- this.setState({...this.state, gameArray: newGameArray1, points :this.state.points+1})
+        let i = Math.floor(Math.random() * 20);
+        let j = Math.floor(Math.random() * 20);
+        while (newGameArray1[i][j] === 1 ) {
+          i = Math.floor(Math.random() * 20);
+          j = Math.floor(Math.random() * 20);
+
+        } newGameArray1[i][j] = 2
+        this.setState({ ...this.state, gameArray: newGameArray1, points: this.state.points + 1 })
       } else {
         newDirection[this.state.endI][this.state.endJ] = null
 
@@ -108,25 +108,26 @@ class TheGame extends Component {
       if (newGameArray[this.state.startI][this.state.startJ] == 1) {
         document.getElementById("open-modal").style.opacity = 1;
         document.getElementById("open-modal").style.pointerEvents = "auto";
-        
-        this.setState({ ...this.state, dead: true })
-      } else 
-      {newGameArray[this.state.startI][this.state.startJ] = 1
 
-      this.setState({
-        ...this.state,
-        gameArray: newGameArray,
-        direction: newDirection,
-      })}
+        this.setState({ ...this.state, dead: true })
+      } else {
+      newGameArray[this.state.startI][this.state.startJ] = 1
+
+        this.setState({
+          ...this.state,
+          gameArray: newGameArray,
+          direction: newDirection,
+        })
+      }
     }
   }
   reset = () => {
     console.log("resetting")
     document.getElementById("open-modal").style.opacity = 0;
     document.getElementById("open-modal").style.pointerEvents = "none";
-        
+
     let newState = {
-      dead:false,
+      dead: false,
       startI: 1,
       startJ: 1,
       endI: 0,
@@ -134,7 +135,7 @@ class TheGame extends Component {
       keyPressed: "down",
       foodI: 4,
       foodJ: 4,
-      points:0
+      points: 0
 
     }
     document.addEventListener("keydown", this.keydown, false)
@@ -153,22 +154,24 @@ class TheGame extends Component {
   }
   keydown = e => {
     if (e.key === "ArrowLeft") {
-      if(this.state.lastPressed !== "right")
-      this.setState({ ...this.state, keyPressed: "left" })
+      if (this.state.lastPressed !== "right")
+        this.setState({ ...this.state, keyPressed: "left" })
     } else if (e.key === "ArrowRight") {
-      if(this.state.lastPressed !== "left")
-      this.setState({ ...this.state, keyPressed: "right" })
-    } else if (e.key === "ArrowDown") {if(this.state.lastPressed !== "up")
-      this.setState({ ...this.state, keyPressed: "down" })
-    } else if (e.key === "ArrowUp") {if(this.state.lastPressed !== "down")
-      this.setState({ ...this.state, keyPressed: "up" })
+      if (this.state.lastPressed !== "left")
+        this.setState({ ...this.state, keyPressed: "right" })
+    } else if (e.key === "ArrowDown") {
+      if (this.state.lastPressed !== "up")
+        this.setState({ ...this.state, keyPressed: "down" })
+    } else if (e.key === "ArrowUp") {
+      if (this.state.lastPressed !== "down")
+        this.setState({ ...this.state, keyPressed: "up" })
     }
   }
   render() {
     return (
       <div>
-        <Modal score={this.state.points} reset={this.reset}/>
-        <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>{Array(20)
+        <Modal score={this.state.points} reset={this.reset} />
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>{Array(20)
           .fill(0)
           .map((x, i) => (
             <div key={i} style={{ display: "flex", flexDirection: "row" }}>
@@ -178,19 +181,24 @@ class TheGame extends Component {
                   <div
                     key={j}
                     style={{
+                      display: "flex",
+                      alignContent: "center",
+                      alignItems: "center",
+                      justifyContent: "center",
                       height: "2.1em",
-                      width: "2.1em",
+                      width: "2.1em", 
                       backgroundColor: this.state.gameArray
-                        ? i==this.state.startI && j == this.state.startJ?"#7f53ac":this.state.gameArray[i][j] == 1
-                          ? "#8a2be2"
+                        ? i == this.state.startI && j == this.state.startJ ? "#8fd3f4" : this.state.gameArray[i][j] == 1
+                          ? "#8fd3f4"
                           : this.state.gameArray[i][j] == 2
-                          ? "#657ced"
-                          : "rgba(255, 255, 255, 0.5)"
-                        : "green",
-                      border: "2px solid rgba(255, 255, 255, 0.1)",
-                      animation: this.state.gameArray?this.state.gameArray[i][j]==2?"smallbig 1s infinite":"none":"none"
+                            ? "#009966"
+                            : "rgba(255, 255, 255, 0.5)"
+                        : "rgba(255, 255, 255, 0.5)",
+                      // border: "2px solid rgba(255, 255, 255, 0.1)",
+                      animation: this.state.gameArray ? this.state.gameArray[i][j] == 2 ? "smallbig 1s infinite" : "none" : "none"
                     }}
-                  >
+                  ><span>{this.state.gameArray
+                    ? i == this.state.startI && j == this.state.startJ ? <div style={{ height: "0.8em", width: "0.8em", backgroundColor: "red", borderRadius:"50%" }}></div> : null : null}</span>
                   </div>
                 ))}
             </div>
